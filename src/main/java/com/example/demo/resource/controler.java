@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     private HashMap<Integer, String[]> studentMap = new HashMap<>();
-    private int nextId = 1;
+    private int ids = 1;
 
     @GetMapping("/hello")
     public String hello() {
@@ -25,7 +25,7 @@ public class Controller {
     @PostMapping("/students")
     public String createStudent(@RequestParam String name, @RequestParam int age, @RequestParam String university) {
         String[] studentData = {name, String.valueOf(age), university};
-        int id= nextId++;
+        int id= ids++;
         studentMap.put(id, studentData);
         return "student created ";
     }
@@ -42,13 +42,13 @@ public class Controller {
 
     @PostMapping("/studentsbyuniversity")
     public ArrayList<String> getStudentsByUniversity(@RequestParam String university) {
-        ArrayList<String> students = new ArrayList<>();
+        ArrayList<String> student = new ArrayList<>();
         for (Map.Entry<Integer, String[]> entry : studentMap.entrySet()) {
             String[] studentData = entry.getValue();
             if (studentData[2].equals(university)) {
-                students.add(studentData[0]);
+                student.add(studentData[0]);
             }
         }
-        return students;
+        return student;
     }
 }
